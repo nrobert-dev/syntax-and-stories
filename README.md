@@ -12,6 +12,6 @@ This repo will eventually hold the source files for the blog posts. Stay tuned a
 
 **Connect:**
 
-Check out the (future!) blog at [**\[Insert Your Blog URL Here]**](Your Blog URL).
+Check out the (future!) blog at [**\[Insert Your Blog URL Here]**].
 
 Thanks for stopping by!
