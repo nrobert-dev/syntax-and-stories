@@ -1,0 +1,115 @@
+---
+// import '../styles/global.css'; // Optional global styles
+
+interface Props {
+  title: string;
+  description: string;
+  ogImage?: string;
+}
+
+// Set default values
+const {
+  title = 'My Awesome Astro Blog',
+  description = 'A blog built with Astro, MDX, and love.',
+  ogImage
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site); 
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="generator" content={Astro.generator} />
+
+  <title>{title}</title>
+  <meta name="description" content={description} />
+
+  <link rel="canonical" href={canonicalURL} />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonicalURL} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  {ogImage && <meta property="og:image" content={new URL(ogImage, Astro.site)} />}
+
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content={canonicalURL} />
+  <meta property="twitter:title" content={title} />
+  <meta property="twitter:description" content={description} />
+  {ogImage && <meta property="twitter:image" content={new URL(ogImage, Astro.site)} />}
+
+  </head>
+<body>
+  <header>
+    <nav>
+      <a href="/">Home</a>
+      </nav>
+  </header>
+  <main>
+    <slot /> </main>
+  <footer>
+    <p>&copy; {new Date().getFullYear()} My Awesome Astro Blog</p>
+  </footer>
+</body>
+</html>
+
+<style is:global>
+  /* Minimal global styles - keep this light */
+  :root {
+    --foreground-rgb: 0, 0, 0;
+    --background-start-rgb: 214, 219, 220;
+    --background-end-rgb: 255, 255, 255;
+    font-family: system-ui, sans-serif;
+  }
+
+  body {
+    margin: 0;
+    padding: 2rem;
+    background: linear-gradient(
+        to bottom,
+        transparent,
+        rgb(var(--background-end-rgb))
+      )
+      rgb(var(--background-start-rgb));
+    color: rgb(var(--foreground-rgb));
+    line-height: 1.6;
+  }
+
+  header, footer {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #ccc;
+  }
+  footer {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-bottom: none;
+    border-top: 1px solid #ccc;
+    font-size: 0.9em;
+    color: #555;
+  }
+  nav a {
+    margin: 0 0.5rem;
+    text-decoration: none;
+    color: inherit;
+    font-weight: bold;
+  }
+  main {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  h1, h2, h3 {
+     margin-bottom: 1rem;
+  }
+   a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+</style>

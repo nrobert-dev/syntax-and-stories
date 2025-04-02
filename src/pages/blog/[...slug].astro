@@ -1,0 +1,65 @@
+---
+// src/pages/blog/[...slug].astro
+import { type CollectionEntry, getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import styles from '../../styles/BlogPost.module.css';
+
+// 1. Generate a page for each non-draft blog post with explicit types
+export async function getStaticPaths() {
+  const allPosts = await getCollection('blog',
+    // Explicitly type the 'entry' parameter passed to the filter function.
+    // Its type is CollectionEntry<'blog'>.
+    (entry: CollectionEntry<'blog'>) => {
+      // Now 'entry.data' is strongly typed based on your src/content/config.ts schema.
+      // Access 'draft' safely.
+      return import.meta.env.PROD ? entry.data.draft !== true : true;
+    }
+  );
+
+  // Explicitly type the 'post' parameter in the map function.
+  // It's also CollectionEntry<'blog'>.
+  return allPosts.map((post: CollectionEntry<'blog'>) => ({
+    params: { slug: post.slug }, // post.slug is string
+    props: { post },            // post is CollectionEntry<'blog'>
+  }));
+}
+
+// Type assertion for the component's props remains crucial
+type Props = { post: CollectionEntry<'blog'> };
+const { post } = Astro.props; // Astro infers 'post' here based on getStaticPaths 'props'
+
+// Render the post content using the Content component
+const { Content } = await post.render(); // Renders MDX to HTML
+
+// Format date for display
+const formattedDate = new Intl.DateTimeFormat('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+}).format(post.data.pubDate);
+---
+<BaseLayout title={post.data.title} description={post.data.description} ogImage={post.data.image?.url}>
+  <article class={styles.blogPost}>
+     {post.data.draft && <p class={styles.draftBanner}>DRAFT POST - Not live</p>}
+    <header class={styles.header}>
+      {/* ... rest of the header ... */}
+      <h1 class={styles.title}>{post.data.title}</h1>
+       <p class={styles.meta}>
+         Published on <time datetime={post.data.pubDate.toISOString()}>{formattedDate}</time>
+         {post.data.author && <span> by {post.data.author}</span>}
+       </p>
+       {post.data.tags && post.data.tags.length > 0 && (
+         <div class={styles.tags}>
+           Tags:
+           {post.data.tags.map((tag : string)=> (
+             <span class={styles.tag}>{tag}</span>
+           ))}
+         </div>
+       )}
+    </header>
+
+    <div class={styles.content}>
+      <Content /> {/* Renders the actual MDX content here */}
+    </div>
+  </article>
+</BaseLayout>

@@ -1,0 +1,29 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import styles from './BlogPostPreview.module.css';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+const postUrl = `/blog/${post.slug}/`; 
+
+// Format date for display
+const formattedDate = new Intl.DateTimeFormat('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+}).format(post.data.pubDate);
+---
+<li class={styles.card}>
+   <h2 class={styles.title}>
+     <a href={postUrl}>{post.data.title}</a>
+     {post.data.draft && <span class={styles.draftNotice}>(Draft)</span>}
+   </h2>
+   <time datetime={post.data.pubDate.toISOString()} class={styles.date}>
+     {formattedDate}
+   </time>
+   <p class={styles.description}>{post.data.description}</p>
+   <a href={postUrl} class={styles.readMore}>Read more &rarr;</a>
+</li>

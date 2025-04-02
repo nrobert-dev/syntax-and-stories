@@ -1,11 +1,57 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+// src/pages/index.astro
+import { type CollectionEntry, getCollection } from 'astro:content'; // Ensure CollectionEntry type is imported
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BlogPostPreview from '../components/BlogPostPreview.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+// 1. Fetch all non-draft blog posts with explicit types
+const allPosts = await getCollection('blog',
+  // Explicitly type the 'entry' parameter
+  (entry: CollectionEntry<'blog'>) => {
+    // entry.data is now strongly typed based on your config schema
+    return import.meta.env.PROD ? entry.data.draft !== true : true;
+  }
+);
+
+// 2. Sort posts by date, newest first, with explicit types for sort parameters
+const sortedPosts = allPosts.sort(
+  // Explicitly type parameters 'a' and 'b'
+  (a: CollectionEntry<'blog'>, b: CollectionEntry<'blog'>) =>
+    // Accessing 'data.pubDate' is now type-safe
+    b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+const pageTitle = "Recent Blog Posts";
+const pageDescription = "Check out the latest articles on my awesome blog.";
 ---
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <h1>{pageTitle}</h1>
+  <p>{pageDescription}</p>
 
-<Layout>
-	<Welcome />
-</Layout>
+  <section>
+    {sortedPosts.length === 0 ? (
+      <p>No blog posts published yet. Check back soon!</p>
+    ) : (
+      <ul>
+        {/* Explicitly type 'post' in the map function */}
+        {sortedPosts.map((post: CollectionEntry<'blog'>) => (
+          // Passing a strongly-typed 'post' to the component
+          <BlogPostPreview post={post} />
+        ))}
+      </ul>
+    )}
+  </section>
+
+</BaseLayout>
+
+<style>
+  /* Styles remain unchanged */
+  section {
+    margin-top: 2rem;
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+</style>

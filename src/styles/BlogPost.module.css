@@ -1,0 +1,128 @@
+/* src/styles/BlogPost.module.css */
+.blogPost {
+  padding: 1rem 0;
+}
+
+.draftBanner {
+    background-color: orange;
+    color: white;
+    padding: 0.5rem 1rem;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 4px;
+    margin-bottom: 1.5rem;
+}
+
+.header {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.title {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+
+.meta {
+  color: #555;
+  font-size: 0.95em;
+  margin-bottom: 1rem;
+}
+
+.meta time {
+  font-weight: bold;
+}
+
+.tags {
+    margin-top: 1rem;
+    font-size: 0.9em;
+    color: #444;
+}
+
+.tag {
+    display: inline-block;
+    background-color: #e7e7e7;
+    color: #333;
+    padding: 0.2rem 0.6rem;
+    margin-left: 0.5rem;
+    border-radius: 4px;
+    font-size: 0.85em;
+}
+
+.content {
+  line-height: 1.7;
+  font-size: 1.1rem; /* Slightly larger font for readability */
+}
+
+/* Style elements generated from MDX */
+.content > :global(h2),
+.content > :global(h3),
+.content > :global(h4) {
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  line-height: 1.3;
+}
+
+.content > :global(p) {
+  margin-bottom: 1.25rem;
+}
+
+.content > :global(ul),
+.content > :global(ol) {
+  margin-bottom: 1.25rem;
+  padding-left: 1.8rem;
+}
+
+.content > :global(li) {
+   margin-bottom: 0.5rem;
+}
+
+.content :global(pre) {
+  background-color: #f4f4f4;
+  padding: 1rem;
+  border-radius: 4px;
+  overflow-x: auto; /* Handle long code lines */
+  margin-bottom: 1.25rem;
+  font-size: 0.95em; /* Smaller font size for code */
+}
+
+.content :global(code) {
+   font-family: 'Courier New', Courier, monospace; /* Monospaced font */
+}
+
+/* Style inline code differently from code blocks */
+.content :global(p > code),
+.content :global(li > code) {
+    background-color: #e8e8e8;
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+    font-size: 0.9em;
+}
+
+.content :global(blockquote) {
+    border-left: 4px solid #ccc;
+    padding-left: 1rem;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 1.25rem;
+    font-style: italic;
+    color: #555;
+}
+
+.content :global(a) {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.content :global(a:hover) {
+  text-decoration: underline;
+}
+
+.content :global(img) {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin: 1rem 0;
+}
