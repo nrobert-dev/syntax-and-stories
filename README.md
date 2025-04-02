@@ -4,7 +4,7 @@ Welcome! This is the (currently barebones!) GitHub repository for the blog, Synt
 
 **What's it about?**
 
-To be decided.
+To be decided. (?)
 
 **What you'll find (eventually!):**
 
