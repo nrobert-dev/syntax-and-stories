@@ -1,0 +1,101 @@
+.pageWrapper {
+  display: grid;
+  grid-template-columns: 3fr 1fr; 
+  gap: calc(var(--spacing-unit) * 3); 
+}
+
+.postsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar {
+  border-left: 1px solid var(--color-border);
+  padding-left: calc(var(--spacing-unit) * 2);
+}
+
+.sidebarSection {
+  margin-bottom: calc(var(--spacing-unit) * 2.5);
+}
+
+.sidebarTitle {
+  font-family: var(--font-primary);
+  font-size: 1.4rem;
+  margin-bottom: var(--spacing-unit);
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: calc(var(--spacing-unit) * 0.5);
+  font-weight: 700;
+}
+
+.aboutImagePlaceholder {
+  width: 100px;
+  height: 100px;
+  background-color: #eee; 
+  border-radius: 50%; 
+  margin: 0 auto var(--spacing-unit) auto;
+  display: block;
+}
+
+.searchBar {
+   width: 100%;
+   padding: calc(var(--spacing-unit) * 0.75);
+   border: 1px solid var(--color-border);
+   font-family: var(--font-secondary);
+   font-size: 1rem;
+   margin-bottom: var(--spacing-unit);
+}
+.searchBar:focus {
+   outline: 1px solid var(--color-accent);
+   border-color: var(--color-accent);
+}
+
+.tagsContainer {
+   display: flex;
+   flex-wrap: wrap;
+   gap: calc(var(--spacing-unit) * 0.5);
+}
+
+.tag {
+   display: inline-block;
+   padding: calc(var(--spacing-unit)*0.3) calc(var(--spacing-unit)*0.8);
+   border: 1px solid var(--color-border);
+   border-radius: 4px;
+   font-size: 0.9em;
+   background-color: transparent;
+   color: var(--color-text);
+   transition: background-color 0.2s, color 0.2s;
+}
+.tag:hover {
+   background-color: var(--color-accent);
+   color: var(--color-background);
+   border-color: var(--color-accent);
+   text-decoration: none;
+}
+
+/* Tablet and Mobile Styles (up to a certain breakpoint, e.g., 1024px) */
+@media (max-width: 1024px) {
+  .pageWrapper {
+    grid-template-columns: 1fr; /* Single column layout */
+    gap: calc(var(--spacing-unit) * 2); /* Adjust gap for smaller screens */
+  }
+
+  /* You might want to adjust the order of elements on smaller screens */
+  /* For example, placing the "About Me" section below the main content */
+  /* You can achieve this using grid-area or order properties if needed. */
+  /* Example using order: */
+  /* .mainContent {
+  /* order: 1;
+  /* }
+  /* .aboutMeSection {
+  /* order: 2;
+  /* } */
+}
+
+/* Mobile Styles (further breakpoint, e.g., 768px or smaller) */
+@media (max-width: 768px) {
+  .pageWrapper {
+    gap: var(--spacing-unit); /* Further reduce gap for smaller screens */
+  }
+  /* You can add more specific adjustments for mobile here if needed */
+}

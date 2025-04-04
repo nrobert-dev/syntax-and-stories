@@ -1,0 +1,85 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BlogPostPreview from '../../components/BlogPostPreview.astro';
+
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection('blog', (entry) => !entry.data.draft);
+  const allTags = allPosts.flatMap((post) => post.data.tags || []);
+  const uniqueTags = [...new Set(allTags)];
+
+  return uniqueTags.map((tag) => ({
+    params: { tag: tag.toLowerCase().replace(/\s+/g, '-') },
+    props: { tag },
+  }));
+}
+
+interface Props {
+  tag: string;
+}
+
+const { tag } = Astro.props;
+
+const allPosts = await getCollection('blog', (entry) => !entry.data.draft);
+const filteredPosts = allPosts.filter((post) =>
+  post.data.tags && post.data.tags.map(t => t.toLowerCase()).includes(tag)
+);
+
+const pageTitle = `Posts Tagged "${tag}" - Syntax and Stories`;
+const pageDescription = `All blog posts on Syntax and Stories tagged with "${tag}".`;
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <div>
+    <h1>Posts Tagged: {tag}</h1>
+
+    {filteredPosts.length === 0 ? (
+      <p>No posts found with the tag "{tag}".</p>
+    ) : (
+      <ul >
+        {filteredPosts.map((post) => (
+          <BlogPostPreview post={post} />
+        ))}
+      </ul>
+    )}
+
+    <p >
+      <a href="/">&larr; Back to Home</a>
+    </p>
+  </div>
+</BaseLayout>
+
+<style>
+  .tagPageWrapper {
+    padding: var(--spacing-unit);
+  }
+
+  .tagPageTitle {
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-unit-large);
+    text-align: center;
+  }
+
+  .postsList {
+    list-style: none;
+    padding: 0;
+    margin-bottom: var(--spacing-unit-large);
+  }
+
+  .backLink {
+    text-align: center;
+    margin-top: var(--spacing-unit);
+  }
+
+  .backLink a {
+    text-decoration: none;
+    color: var(--color-text);
+    font-weight: bold;
+  }
+
+  .backLink a:hover {
+    color: var(--color-accent);
+    text-decoration: underline;
+  }
+</style>

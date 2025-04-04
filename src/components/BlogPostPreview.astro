@@ -7,14 +7,23 @@ interface Props {
 }
 
 const { post } = Astro.props;
-const postUrl = `/blog/${post.slug}/`; 
+const postUrl = `/blog/${post.slug}/`;
 
-// Format date for display
-const formattedDate = new Intl.DateTimeFormat('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-}).format(post.data.pubDate);
+const formattedDateEU = new Intl.DateTimeFormat(undefined, { year: 'numeric', month: 'long', day: 'numeric' }).format(post.data.pubDate);
+
+
+const MAX_EXCERPT_LENGTH = 180;
+const plainTextBody = post.body
+  .replace(/---[\s\S]*?---/, '') // Remove frontmatter if accidentally included
+  .replace(/<[^>]*>?/gm, '')     // Remove HTML tags
+  .replace(/[`*#~\[\]()]/g, '')  // Remove common markdown characters
+  .replace(/\n+/g, ' ')         // Replace newlines with spaces
+  .trim();
+
+const excerpt = plainTextBody.length > MAX_EXCERPT_LENGTH
+  ? plainTextBody.substring(0, MAX_EXCERPT_LENGTH) + '...'
+  : plainTextBody;
+
 ---
 <li class={styles.card}>
    <h2 class={styles.title}>
@@ -22,8 +31,9 @@ const formattedDate = new Intl.DateTimeFormat('en-US', {
      {post.data.draft && <span class={styles.draftNotice}>(Draft)</span>}
    </h2>
    <time datetime={post.data.pubDate.toISOString()} class={styles.date}>
-     {formattedDate}
+     {formattedDateEU}
    </time>
-   <p class={styles.description}>{post.data.description}</p>
+
+   <p class={styles.description}>{excerpt}</p>
    <a href={postUrl} class={styles.readMore}>Read more &rarr;</a>
 </li>
