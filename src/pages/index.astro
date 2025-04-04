@@ -3,6 +3,7 @@ import { type CollectionEntry, getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import BlogPostPreview from '../components/BlogPostPreview.astro';
 import styles from '../styles/IndexPage.module.css';
+import SearchBar from '../components/SearchBar';
 
 
 const allPosts = await getCollection('blog', /* ... */ );
@@ -17,7 +18,7 @@ const pageDescription = "Thoughts on vintage, minimalism, writing, stories, and 
 ---
 <BaseLayout title={pageTitle} description={pageDescription}>
   <div class={styles.pageWrapper}>
-    <section class={styles.mainContent}>
+    <section class={styles.mainContent}>   
       {sortedPosts.length === 0 ? (
         <p>No blog posts published yet. Check back soon!</p>
       ) : (
@@ -43,8 +44,8 @@ const pageDescription = "Thoughts on vintage, minimalism, writing, stories, and 
 
      
       <section class={styles.sidebarSection}>
-         <h2 class={styles.sidebarTitle}>Explore</h2>    
-         <input type="search" placeholder="Search Blog..." class={styles.searchBar} />   
+         <h2 class={styles.sidebarTitle}>Explore</h2>  
+          <SearchBar client:only posts={allPosts.flatMap(p => ({...p.data, slug : p.slug}))}/>  
          <div class={styles.tagsContainer}>
     {uniqueTags.map((tag) => (
       <a href={`/tags/${tag.toLowerCase().replace(/\s+/g, '-')}`} class={styles.tag}>{tag}</a>

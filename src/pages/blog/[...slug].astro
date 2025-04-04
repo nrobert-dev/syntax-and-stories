@@ -52,7 +52,7 @@ const formattedDate = new Intl.DateTimeFormat('en-US', {
          <div class={styles.tags}>
            Tags:
            {post.data.tags.map((tag : string)=> (
-             <span class={styles.tag}>{tag}</span>
+             <a href={`/tags/${tag.toLowerCase().replace(/\s+/g, '-')}`} class={styles.tag}>{tag}</a>
            ))}
          </div>
        )}

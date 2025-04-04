@@ -14,11 +14,15 @@
    border-bottom: none;
 }
 
+.card:first-of-type {
+  padding-top: 0;
+}
+
 .title {
   margin-top: 0;
   margin-bottom: calc(var(--spacing-unit) * 0.25); 
   font-family: var(--font-primary); /* Playfair Display */
-  font-size: 1.8rem; 
+  font-size: 1.6rem; 
   font-weight: 700;
   line-height: 1.3;
 }

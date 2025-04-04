@@ -39,11 +39,13 @@
 
 .searchBar {
    width: 100%;
-   padding: calc(var(--spacing-unit) * 0.75);
+   padding: calc(var(--spacing-unit) * 0.55);
    border: 1px solid var(--color-border);
    font-family: var(--font-secondary);
-   font-size: 1rem;
+   font-size: 0.75rem;
    margin-bottom: var(--spacing-unit);
+   border-radius:6px;
+   
 }
 .searchBar:focus {
    outline: 1px solid var(--color-accent);

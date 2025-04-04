@@ -26,10 +26,10 @@ const excerpt = plainTextBody.length > MAX_EXCERPT_LENGTH
 
 ---
 <li class={styles.card}>
-   <h2 class={styles.title}>
+   <h3 class={styles.title}>
      <a href={postUrl}>{post.data.title}</a>
      {post.data.draft && <span class={styles.draftNotice}>(Draft)</span>}
-   </h2>
+   </h3>
    <time datetime={post.data.pubDate.toISOString()} class={styles.date}>
      {formattedDateEU}
    </time>
