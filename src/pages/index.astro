@@ -15,8 +15,37 @@ const uniqueTags = [...new Set(allTags)];
 
 const pageTitle = "Syntax and Stories - Home";
 const pageDescription = "Thoughts on vintage, minimalism, writing, stories, and syntax.";
+
+
+const highlightedPost = sortedPosts.find(post => !post.data.draft);
+const highlighedPostTitle = highlightedPost?.data.title;
+const highligthedPost = highlightedPost?.body;
+
+const MAX_EXCERPT_LENGTH = 180;
+const plainTextBody = highligthedPost ? highligthedPost
+  .replace(/---[\s\S]*?---/, '') // Remove frontmatter if accidentally included
+  .replace(/<[^>]*>?/gm, '')     // Remove HTML tags
+  .replace(/[`*#~\[\]()]/g, '')  // Remove common markdown characters
+  .replace(/\n+/g, ' ')         // Replace newlines with spaces
+  .trim() : "";
+
+const excerpt = plainTextBody.length > MAX_EXCERPT_LENGTH
+  ? plainTextBody.substring(0, MAX_EXCERPT_LENGTH) + '...'
+  : plainTextBody;
+
+
 ---
 <BaseLayout title={pageTitle} description={pageDescription}>
+   <section class={styles.highlight}>
+    <div>
+       <img src="https://picsum.photos/800/300"/> 
+    </div>
+    
+     <div class={styles.post}>
+      <h2>{highlighedPostTitle}</h2>
+      <p>{excerpt}</p>
+     </div>
+   </section>
   <div class={styles.pageWrapper}>
     <section class={styles.mainContent}>   
       {sortedPosts.length === 0 ? (

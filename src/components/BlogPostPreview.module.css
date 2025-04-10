@@ -2,7 +2,7 @@
 .card {
   list-style:none;
   border: none; 
-  border-bottom: 1px solid var(--color-border); 
+  border-bottom: 1px solid rgb(50,50,50);
   padding: calc(var(--spacing-unit) * 2) 0; 
   margin-bottom: 0;
   background-color: transparent;
@@ -21,7 +21,7 @@
 .title {
   margin-top: 0;
   margin-bottom: calc(var(--spacing-unit) * 0.25); 
-  font-family: var(--font-primary); /* Playfair Display */
+  font-family: var(--font-secondary);
   font-size: 1.6rem; 
   font-weight: 700;
   line-height: 1.3;

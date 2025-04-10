@@ -15,7 +15,7 @@
 }
 
 .title {
-  font-family: var(--font-primary);
+  font-family: var(--font-secondarys);
   font-size: 2.8rem; 
   margin-bottom: var(--spacing-unit);
   line-height: 1.2;
@@ -70,7 +70,7 @@
 .content > :global(h2),
 .content > :global(h3),
 .content > :global(h4) {
-  font-family: var(--font-primary); 
+  font-family: var(--font-secondary); 
   margin-top: calc(var(--spacing-unit) * 2.5);
   margin-bottom: var(--spacing-unit);
   line-height: 1.3;

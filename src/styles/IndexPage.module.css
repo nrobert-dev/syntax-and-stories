@@ -10,9 +10,63 @@
   margin: 0;
 }
 
+.highlight {
+ display : flex;
+ flex-direction: column;
+ border-bottom : 1px solid rgb(50,50,50)
+}
+
+.highlight img {
+  width : 100%;
+  border-radius : 2px;
+}
+
+.highlight .post {
+  display : flex;
+  flex-direction : row;
+  justify-content: space-between;
+  min-height : 220px;
+}
+
+.highlight .post h2 {
+  font-size : 5rem;
+  max-width : 60%;
+  gap : var(--spacing-unit);
+}
+
 .sidebar {
-  border-left: 1px solid var(--color-border);
-  padding-left: calc(var(--spacing-unit) * 2);
+  background-color: var(--color-solid-accent);
+  border-radius: 2px;
+  padding: calc(var(--spacing-unit) * 1.5);
+  color: var(--color-background);
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  position: relative; /* Needed for positioning the pseudo-elements */
+  overflow: hidden; /* To hide the parts of the circles outside the border */
+}
+
+.sidebar::before,
+.sidebar::after {
+  content: "";
+  display: block;
+  width: 32px; /* Adjust the size of the circles as needed */
+  height: 30px; /* Should be the same as width for a circle */
+  border-radius: 50%; /* Makes it a circle */
+  background-color: var(--color-background);
+  position: absolute;
+}
+
+/* Top-left circle */
+.sidebar::before {
+  top: -15px; /* Half the height to position at the top edge */
+  left: -15px; /* Half the width to position at the left edge */
+}
+
+/* Top-right circle */
+.sidebar::after {
+  top: -15px; /* Half the height to position at the top edge */
+  right: -15px; /* Half the width to position at the right edge */
 }
 
 .sidebarSection {
@@ -20,7 +74,7 @@
 }
 
 .sidebarTitle {
-  font-family: var(--font-primary);
+  font-family: var(--font-secondary);
   font-size: 1.4rem;
   margin-bottom: var(--spacing-unit);
   border-bottom: 1px solid var(--color-border);
@@ -81,23 +135,11 @@
     grid-template-columns: 1fr; /* Single column layout */
     gap: calc(var(--spacing-unit) * 2); /* Adjust gap for smaller screens */
   }
-
-  /* You might want to adjust the order of elements on smaller screens */
-  /* For example, placing the "About Me" section below the main content */
-  /* You can achieve this using grid-area or order properties if needed. */
-  /* Example using order: */
-  /* .mainContent {
-  /* order: 1;
-  /* }
-  /* .aboutMeSection {
-  /* order: 2;
-  /* } */
 }
 
-/* Mobile Styles (further breakpoint, e.g., 768px or smaller) */
 @media (max-width: 768px) {
   .pageWrapper {
     gap: var(--spacing-unit); /* Further reduce gap for smaller screens */
   }
-  /* You can add more specific adjustments for mobile here if needed */
+ 
 }

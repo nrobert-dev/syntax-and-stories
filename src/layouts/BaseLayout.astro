@@ -22,9 +22,13 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;1,400&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Rye&display=swap" rel="stylesheet">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
 
   <meta name="generator" content={Astro.generator} />
 
@@ -49,48 +53,74 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 <body>
   <header>
     <div class="header-content">
+      <div id="issue-date" class="current-date">{new Date().getFullYear()}</div>
       <div class="site-title">
+        <p class="description"> A blog about my thoughts and experiments </p>
         <h1>
           <a href="/">Syntax and Stories</a>
-        </h1>
-        <h2>
-          My Random Musings and More
-        </h2>
-      
+        </h1>    
       </div>
       <nav class="main-nav">
         <a href="/about/">About Me</a>
         <a href="#">Github</a>
+         <a href="#">Artstation</a>
       </nav>
     </div>
     <hr class="header-divider" />
-    <hr class="header-divider" />
   </header>
   <main>
-    <slot /> </main>
+    <slot /> 
+  </main>
   <footer>
     <p>&copy; {new Date().getFullYear()} My Awesome Astro Blog</p>
   </footer>
 </body>
 </html>
 
+<script>
+   const dateElement = document.querySelector("#issue-date");
+   if(dateElement){
+    dateElement.textContent = new Date().toDateString();
+   }
+</script>
+
 <style>
+  .current-date {
+    display : flex;
+    justify-content: flex-end;
+    width : 100%;
+  }
   .header-content {
     display: flex;
     flex-direction: column; /* Stack items vertically */
     align-items: center; /* Center items horizontally */
-    padding: var(--spacing-unit) 0 calc(var(--spacing-unit) * 2); /* More padding below */
     gap: var(--spacing-unit);
     text-align: center; /* Center text within the header */
+  }
+
+  .description {
+    position : absolute;
+    top: -22px;
+    padding : 8px 6px;
+    left : 20px;
+    background : var(--color-background);
+  }
+
+  .site-title{
+    width : 100%;
+    position : relative;
   }
 
   .site-title a {
     font-family: var(--font-primary);
     font-size: 5rem; /* Increased font size */
-    font-weight: 700;
+    font-weight: 400;
     color: var(--color-text);
     text-decoration: none;
     display: block;
+    border-top : 1px solid rgb(50, 50, 50);
+    border-bottom: 1px solid rgb(50,50,50);
+    width : 100%;
   }
   .site-title a:hover {
     text-decoration: none;
@@ -102,10 +132,37 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     font-family: var(--font-secondary);
     font-size: 1.1rem; /* Slightly increased font size for links */
     justify-content: center; /* Center the navigation links */
+    background: var(--color-solid-accent);
+    width: 100%;
+    min-height: 58px;
+    align-items: center;
+    position: relative; /* Needed for positioning the pseudo-elements */
+    overflow: hidden; /* Important to hide the parts of the circles that extend beyond the nav */
   }
 
+  .main-nav::before,
+.main-nav::after {
+  content: "";
+  display: block;
+  width: 80px; /* Adjust the size of the circles as needed */
+  height: 66px; /* Should be the same as width for a circle */
+  border-radius: 50%; /* Makes it a circle */
+  background: var(--color-background);
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.main-nav::before {
+  left: -35px; /* Adjust to position the left circle - half of the width */
+}
+
+.main-nav::after {
+  right: -35px; /* Adjust to position the right circle - half of the width */
+}
+
   .main-nav a {
-    color: var(--color-text);
+    color: var(--color-background);
     text-decoration: none;
     font-weight: 400;
     transition: color 0.2s ease;
@@ -118,8 +175,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
   .header-divider {
     border: none;
-    border-top: 1px solid var(--color-border);
-    margin-top: var(--spacing-unit);
+    border-top: 1px solid rgb(23, 23, 23);
     margin-bottom: 0;
     width: 100%;
   }
@@ -129,13 +185,22 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       flex-direction: column; /* Keep stacking on larger screens for this layout */
       justify-content: center; /* Center vertically in the header */
       align-items: center; /* Center horizontally */
-      padding: calc(var(--spacing-unit) * 3) 0 calc(var(--spacing-unit) * 4); /* Adjust padding */
+      padding: calc(var(--spacing-unit) * 3) 0 calc(var(--spacing-unit) * 1.5); /* Adjust padding */
     }
     .site-title a {
       font-size: 6rem; /* Even bigger on larger screens */
     }
     .main-nav {
       font-size: 1.2rem;
+    }
+  }
+
+  @media (max-width : 600px) {
+    .description {
+      font-size : 0.9rem;
+      padding : 6px 3px;
+      top : -18px;
+      word-break:keep-all;
     }
   }
 </style>
